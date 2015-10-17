@@ -4,15 +4,23 @@ var playerTotalCards = 2;
 var dealerTotalCards = 2;
 var playerHand;
 var dealerHand;
-var winCount = 0;
+var totalPot = 1000;
+var bet = 0;
+var busted = 0;
 
 function bust(who){
 	if(who==='player'){
 		document.getElementById('message').innerHTML = "You have busted, better luck next time";
+		document.getElementById('dealer-card-one').className = 'card';
+		document.getElementById('dealer-card-one').innerHTML = deck[1];
+		busted = 1;
+		totalPot-=bet;
 	}else{
 		document.getElementById('message').innerHTML = "The dealer has busted, you win!";
+		totalPot+=bet;
 	}
-
+	
+	checkWin()
 }
 
 function calculateTotal(hand, who){
@@ -26,45 +34,67 @@ function calculateTotal(hand, who){
 		}
 		total += cardValue;
 	}
+	if((total===22)&&(hand.length<3)){
+		total = 12;
+	}
+
 	var idWhoToGet = who+'-total';
 	document.getElementById(idWhoToGet).innerHTML = total;
-
-	if(total>21){
-		bust(who);	
-	}
+	
+		if(total>21){
+			if(busted != 1){
+				bust(who);	
+			}
+		}
 	return total;
 }
 
 function checkWin(){
-	var playerTotal = calculateTotal(playerHand,'player');
-	var dealerTotal = calculateTotal(dealerHand,'dealer');
-	var winner;
-	if(((playerTotal>dealerTotal)&&(playerTotal<=21))||((dealerTotal>21)&&(playerTotal<=21))){
-		// Player Wins!
-		winner = 'player';
-	}else if(((playerTotal === dealerTotal)&&(playerTotal<=21))||((playerTotal>21)&&(dealerTotal>21))){
-		winner = 'tie';
-		// Push
-	}else{
-		winner = 'dealer';
-	}
-	if(winner === 'player'){
-		document.getElementById('message').innerHTML = "You Win!";
-		winCount++;
-	}else if(winner === 'dealer'){
-		document.getElementById('message').innerHTML = "You Lose!";
-		winCount--;
-	}else if(winner === 'tie'){
-		document.getElementById('message').innerHTML = "Push!";
-	}
-
-	document.getElementById('win-count').innerHTML = winCount;
+	if(busted!=1){	
+		var playerTotal = calculateTotal(playerHand,'player');
+		var dealerTotal = calculateTotal(dealerHand,'dealer');
 	
+		var winner;
+		if(((playerTotal>dealerTotal)&&(playerTotal<=21))||((dealerTotal>21)&&(playerTotal<=21))){
+			// Player Wins!
+			winner = 'player';
+		}else if(((playerTotal === dealerTotal)&&(playerTotal<=21))||((playerTotal>21)&&(dealerTotal>21))){
+			winner = 'tie';
+			// Push
+		}else{
+			winner = 'dealer';
+		}
+		if(winner === 'player'){
+			document.getElementById('message').innerHTML = "You Win!";
+			totalPot+=bet;
+		}else if(winner === 'dealer'){
+			document.getElementById('message').innerHTML = "You Lose!";
+			totalPot-=bet;
+		}else if(winner === 'tie'){
+			document.getElementById('message').innerHTML = "Push!";
+		}
+		document.getElementById('draw-button').disabled = false;
+		if(totalPot <=0){
+			alert("You're out of money!")
+			document.getElementById('draw-button').disabled = true;
+		}
+}
+	document.getElementById('win-count').innerHTML = "$"+totalPot;
+
 }
 
 function deal(){
 // Shuffled deck from function shuffleDeck
 	reset();
+	bet = Number(prompt("How much would you like to wager?"))
+	while(bet>totalPot){
+		if(bet>totalPot){
+			bet = Number(prompt("You don't have that much money to risk! Enter a number less than your total $ amount"))
+		}
+	}
+	while(bet<=0){
+		bet = Number(prompt("You must wager a positive amount!"))
+	}
 	deck = shuffleDeck();
 	playerHand=[deck[0],deck[2]];
 	dealerHand=[deck[1],deck[3]];
@@ -84,6 +114,7 @@ function deal(){
 	document.getElementById('draw-button').disabled = true;
 	document.getElementById('stand-button').disabled = false;
 	document.getElementById('hit-button').disabled=false;
+	busted = 0;
 }
 
 function hit(){
@@ -101,7 +132,9 @@ function hit(){
 	playerTotalCards++;
 	placeInDeck++;
 	calculateTotal(playerHand,'player')
-
+	if(busted = 1){
+		document.getElementById('draw-button').disabled = false;
+	}
 }
 
 function placeCard(card,who,slot){
@@ -142,7 +175,7 @@ function shuffleDeck(){
 		}else if(s === 3){
 			suit = "<img style ='width:30px; height: 30px;' src='http://www.clker.com/cliparts/h/Y/J/D/X/d/diamond-md.png'>";
 		}else if(s === 4){
-			suit = "<img style = style ='width:30px; height: 30px;' src='https://img0.etsystatic.com/015/0/5224796/il_170x135.462214460_doo3.jpg'>";
+			suit = "<img style ='width:30px; height: 30px;' src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/SuitClubs.svg/240px-SuitClubs.svg.png'>";
 		}
 		//card number
 		for(i = 1; i <= 13; i++){
@@ -189,12 +222,14 @@ function stand(){
 		placeInDeck++;
 		dealerTotalCards++;
 	}
+	console.log(busted)
+
 	document.getElementById('dealer-total').innerHTML = dealerHas;
 	document.getElementById('dealer-card-one').className = 'card';
 	document.getElementById('dealer-card-one').innerHTML = deck[1];
-	document.getElementById('draw-button').disabled = false;
 	document.getElementById('stand-button').disabled = true;
 	checkWin();
+
 }
 
 
