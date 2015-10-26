@@ -13,14 +13,13 @@ function bust(who){
 		document.getElementById('message').innerHTML = "You have busted, better luck next time";
 		document.getElementById('dealer-card-one').className = 'card';
 		document.getElementById('dealer-card-one').innerHTML = deck[1];
-		busted = 1;
 		totalPot-=bet;
 	}else{
 		document.getElementById('message').innerHTML = "The dealer has busted, you win!";
 		totalPot+=bet;
 	}
-	
-	checkWin()
+	busted = 1;
+	// checkWin()
 }
 
 function calculateTotal(hand, who){
@@ -42,9 +41,7 @@ function calculateTotal(hand, who){
 	document.getElementById(idWhoToGet).innerHTML = total;
 	
 		if(total>21){
-			if(busted != 1){
 				bust(who);	
-			}
 		}
 	return total;
 }
@@ -55,7 +52,11 @@ function checkWin(){
 		var dealerTotal = calculateTotal(dealerHand,'dealer');
 	
 		var winner;
-		if(((playerTotal>dealerTotal)&&(playerTotal<=21))||((dealerTotal>21)&&(playerTotal<=21))){
+		
+		if((playerTotal===21)&&(dealerTotal!==21)){
+			winner='blackjack'
+		}
+		else if(((playerTotal>dealerTotal)&&(playerTotal<=21))||((dealerTotal>21)&&(playerTotal<=21))){
 			// Player Wins!
 			winner = 'player';
 		}else if(((playerTotal === dealerTotal)&&(playerTotal<=21))||((playerTotal>21)&&(dealerTotal>21))){
@@ -64,7 +65,11 @@ function checkWin(){
 		}else{
 			winner = 'dealer';
 		}
-		if(winner === 'player'){
+		if(winner=== 'blackjack'){
+			document.getElementById('message').innerHTML = "BlackJack!"
+			totalPot+=bet*1.5;
+		}
+		else if(winner === 'player'){
 			document.getElementById('message').innerHTML = "You Win!";
 			totalPot+=bet;
 		}else if(winner === 'dealer'){
@@ -74,7 +79,7 @@ function checkWin(){
 			document.getElementById('message').innerHTML = "Push!";
 		}
 		document.getElementById('draw-button').disabled = false;
-		if(totalPot <=0){
+		if(totalPot = 0){
 			alert("You're out of money!")
 			document.getElementById('draw-button').disabled = true;
 		}
@@ -205,7 +210,6 @@ function shuffleDeck(){
 	return deck;
 }
 
-// This needs help with actually removing the cards that are in the slots after the first two...
 
 function stand(){
 	var dealerHas = calculateTotal(dealerHand, 'dealer');
