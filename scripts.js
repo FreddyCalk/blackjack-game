@@ -174,13 +174,13 @@ function shuffleDeck(){
 	var suit = " ";
 	for(s = 1; s <= 4; s++){
 		if(s === 1){
-			suit = "<img style='width: 30px; height: 30px;' src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/SuitHearts.svg/208px-SuitHearts.svg.png'>";
+			suit = "<img style='width: 30px; height: 30px;' src='hearts.png'>";
 		}else if(s === 2){
-			suit = "<img style ='width:30px; height: 30px;' src='https://pixabay.com/static/uploads/photo/2013/07/12/12/01/suit-of-spades-145116_640.png'>";
+			suit = "<img style ='width:30px; height: 30px;' src='spades.jpg'>";
 		}else if(s === 3){
-			suit = "<img style ='width:30px; height: 30px;' src='http://www.clker.com/cliparts/h/Y/J/D/X/d/diamond-md.png'>";
+			suit = "<img style ='width:30px; height: 30px;' src='diamond.png'>";
 		}else if(s === 4){
-			suit = "<img style ='width:30px; height: 30px;' src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/SuitClubs.svg/240px-SuitClubs.svg.png'>";
+			suit = "<img style ='width:30px; height: 30px;' src='clubs.png'>";
 		}
 		//card number
 		for(i = 1; i <= 13; i++){
