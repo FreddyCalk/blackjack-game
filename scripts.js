@@ -6,19 +6,20 @@ var playerHand;
 var dealerHand;
 var totalPot = 1000;
 var bet = 0;
-var busted = 0;
+var busted = false;
 
 function bust(who){
-	if(who==='player'){
+	if(who === 'player'){
 		document.getElementById('message').innerHTML = "You have busted, better luck next time";
 		document.getElementById('dealer-card-one').className = 'card';
 		document.getElementById('dealer-card-one').innerHTML = deck[1];
 		totalPot-=bet;
-	}else{
+	}else if(who === 'dealer'){
 		document.getElementById('message').innerHTML = "The dealer has busted, you win!";
 		totalPot+=bet;
 	}
-	busted = 1;
+	document.getElementById('win-count').innerHTML = "$"+totalPot;
+	busted = true;
 	// checkWin()
 }
 
@@ -47,7 +48,7 @@ function calculateTotal(hand, who){
 }
 
 function checkWin(){
-	if(busted!=1){	
+	if(!busted){	
 		var playerTotal = calculateTotal(playerHand,'player');
 		var dealerTotal = calculateTotal(dealerHand,'dealer');
 	
@@ -77,13 +78,17 @@ function checkWin(){
 			totalPot-=bet;
 		}else if(winner === 'tie'){
 			document.getElementById('message').innerHTML = "Push!";
+			totalPot = totalPot;
 		}
 		document.getElementById('draw-button').disabled = false;
-		if(totalPot = 0){
-			alert("You're out of money!")
-			document.getElementById('draw-button').disabled = true;
-		}
-}
+	}
+	if(busted){
+		document.getElementById('draw-button').disabled = false;
+	}
+	if(totalPot === 0){
+		alert("You're out of money!")
+		document.getElementById('draw-button').disabled = true;
+	}
 	document.getElementById('win-count').innerHTML = "$"+totalPot;
 
 }
@@ -119,7 +124,7 @@ function deal(){
 	document.getElementById('draw-button').disabled = true;
 	document.getElementById('stand-button').disabled = false;
 	document.getElementById('hit-button').disabled=false;
-	busted = 0;
+	busted = false;
 }
 
 function hit(){
@@ -137,7 +142,7 @@ function hit(){
 	playerTotalCards++;
 	placeInDeck++;
 	calculateTotal(playerHand,'player')
-	if(busted = 1){
+	if(busted){
 		document.getElementById('draw-button').disabled = false;
 	}
 }
@@ -226,8 +231,6 @@ function stand(){
 		placeInDeck++;
 		dealerTotalCards++;
 	}
-	console.log(busted)
-
 	document.getElementById('dealer-total').innerHTML = dealerHas;
 	document.getElementById('dealer-card-one').className = 'card';
 	document.getElementById('dealer-card-one').innerHTML = deck[1];
