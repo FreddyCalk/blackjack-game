@@ -20,7 +20,14 @@ function bust(who){
 	}
 	document.getElementById('win-count').innerHTML = "$"+totalPot;
 	busted = true;
-	// checkWin()
+	if(totalPot <= 0){
+		alert("You're out of money!")
+		document.getElementById('draw-button').disabled = true;
+		document.getElementById('hit-button').disabled = true;
+		document.getElementById('stand-button').disabled = true;
+	}else if((busted)&&(totalPot>0)){
+		document.getElementById('draw-button').disabled = false;
+	}
 }
 
 function calculateTotal(hand, who){
@@ -79,14 +86,12 @@ function checkWin(){
 		}else if(winner === 'tie'){
 			document.getElementById('message').innerHTML = "Push!";
 		}
-		document.getElementById('draw-button').disabled = false;
 	}
-	if(busted){
-		document.getElementById('draw-button').disabled = false;
-	}
-	if(totalPot === 0){
+	if(totalPot <= 0){
 		alert("You're out of money!")
 		document.getElementById('draw-button').disabled = true;
+		document.getElementById('hit-button').disabled = true;
+		document.getElementById('stand-button').disabled = true;
 	}
 	document.getElementById('win-count').innerHTML = "$"+totalPot;
 
@@ -143,6 +148,7 @@ function hit(){
 	calculateTotal(playerHand,'player')
 	if(busted){
 		document.getElementById('draw-button').disabled = false;
+		document.getElementById('hit-button').disabled = true;
 	}
 }
 
@@ -234,6 +240,7 @@ function stand(){
 	document.getElementById('dealer-card-one').className = 'card';
 	document.getElementById('dealer-card-one').innerHTML = deck[1];
 	document.getElementById('stand-button').disabled = true;
+	document.getElementById('draw-button').disabled = false;
 	checkWin();
 
 }
