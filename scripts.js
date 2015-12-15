@@ -78,7 +78,6 @@ function checkWin(){
 			totalPot-=bet;
 		}else if(winner === 'tie'){
 			document.getElementById('message').innerHTML = "Push!";
-			totalPot = totalPot;
 		}
 		document.getElementById('draw-button').disabled = false;
 	}
