@@ -13,6 +13,7 @@
 <title>BlackJack Game!</title>
 
 <script type="text/javascript" src="scripts.js"></script>
+<!-- <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"> -->
 <link rel="stylesheet" type="text/css" href="styles.css">
 
 <div id="the-table">
@@ -44,6 +45,22 @@
 		<button id="hit-button" onclick="hit()">Hit</button>
 		<button id="stand-button" onclick="stand()">Stand</button>
 	</div>
+	<div class="gamble-buttons">
+		<div type="button" class="bet up-arrow" onclick="placeBet(10)"></div>
+		<div type="button" class="bet up-arrow" onclick="placeBet(100)"></div>
+		<div type="button" class="bet up-arrow" onclick="placeBet(1000)"></div>
+	</div>
+	<div class="gamble-buttons">
+		<div class="bet-amount">$10</div>
+		<div class="bet-amount">$100</div>
+		<div class="bet-amount">$1000</div>
+	</div>
+	<div class="gamble-buttons">
+		<div type="button" class="bet down-arrow" onclick="placeBet(-10)"></div>
+		<div type="button" class="bet down-arrow" onclick="placeBet(-100)"></div>
+		<div type="button" class="bet down-arrow" onclick="placeBet(-1000)"></div>
+	</div>
+	<div id="wager">Current Wager: <span id="current-bet">$0</span></div>
 
 	<div id="message"></div>
 

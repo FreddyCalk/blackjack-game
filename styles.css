@@ -1,7 +1,7 @@
 #the-table{
 	background: green;
 	max-width: 600px;
-	height:315px;
+	height:500px;
 	border-radius: 10px;
 	margin: auto;
 	margin-top: 30px;
@@ -90,4 +90,45 @@
 	color: white;
 	font-size: 20px;
 	text-align: center;
+	margin-top: 20px;
+}
+.gamble-buttons .bet{
+	display:inline;
+	float:left;
+	margin: 0px 80px 0px;
+}
+.gamble-buttons .bet-amount{
+	display:inline;
+	float:left;
+	color:white;
+	margin:20px;
+	width:160px;
+	text-align: center;
+}
+.up-arrow:hover{
+	border-bottom: 20px solid #ccc;
+	cursor: pointer;
+}
+.down-arrow:hover{
+	border-top: 20px solid #ccc;
+	cursor: pointer;
+}
+.up-arrow{
+	width:0px;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-bottom: 20px solid white;
+	margin-bottom: 20px;
+}
+.down-arrow{
+	width:0px;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-top: 20px solid white;
+	margin-top: 20px;
+}
+#wager{
+	text-align: center;
+	margin-top: 120px;
+	color:white;
 }

@@ -48,7 +48,7 @@ function calculateTotal(hand, who){
 	var idWhoToGet = who+'-total';
 	document.getElementById(idWhoToGet).innerHTML = total;
 	
-		if(total>21){
+		if((total>21)&&(!busted)){
 				bust(who);	
 		}
 	return total;
@@ -97,18 +97,22 @@ function checkWin(){
 
 }
 
+function placeBet(amount){
+	bet += amount;
+	if(bet<0){
+		alert("You must wager a positive amount");
+		bet = 0;
+	}else if(bet> totalPot){
+		alert("You don't have that much to wager");
+		bet = totalPot;
+	}
+	document.getElementById('current-bet').innerHTML = "$"+ bet;
+}
+
 function deal(){
 // Shuffled deck from function shuffleDeck
 	reset();
-	bet = Number(prompt("How much would you like to wager?"))
-	while(bet>totalPot){
-		if(bet>totalPot){
-			bet = Number(prompt("You don't have that much money to risk! Enter a number less than your total $ amount"))
-		}
-	}
-	while(bet<=0){
-		bet = Number(prompt("You must wager a positive amount!"))
-	}
+
 	deck = shuffleDeck();
 	playerHand=[deck[0],deck[2]];
 	dealerHand=[deck[1],deck[3]];
@@ -200,12 +204,6 @@ function shuffleDeck(){
 
 	// var numberOfTimesToShuffle = Math.floor( Math.random() * 500 + 500);
 	var numberOfTimesToShuffle = 2000;
-
-// Math.random() // Create a random 16 digit number between 0 and 1
-// //eg .89745839857324985
-// .89745839857324985 * 500 = 450.745839857324985
-// 450.745839857324985 + 500 = 950.745839857324985
-// 950
 
 	//Shuffle the deck
 	for(i = 0; i < numberOfTimesToShuffle; i++){
