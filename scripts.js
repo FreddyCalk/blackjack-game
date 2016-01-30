@@ -8,6 +8,16 @@ var totalPot = 1000;
 var bet = 0;
 var busted = false;
 
+setInterval(function(){
+	if((totalPot == 0)||(bet == 0)){
+		document.getElementById('draw-button').disabled = true;
+		document.getElementById('hit-button').disabled = true;
+		document.getElementById('stand-button').disabled = true;
+	}else{
+		document.getElementById('draw-button').disabled = false;
+	}
+},100)
+
 function bust(who){
 	if(who === 'player'){
 		document.getElementById('message').innerHTML = "You have busted, better luck next time";
