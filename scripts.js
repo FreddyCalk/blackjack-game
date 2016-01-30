@@ -59,6 +59,8 @@ function checkWin(){
 		var playerTotal = calculateTotal(playerHand,'player');
 		var dealerTotal = calculateTotal(dealerHand,'dealer');
 	
+
+	
 		var winner;
 		
 		if((playerTotal===21)&&(dealerTotal!==21)){
@@ -100,10 +102,10 @@ function checkWin(){
 function placeBet(amount){
 	bet += amount;
 	if(bet<0){
-		alert("You must wager a positive amount");
+		document.getElementById('message').innerHTML = "You must wager a positive amount";
 		bet = 0;
 	}else if(bet> totalPot){
-		alert("You don't have that much to wager");
+		document.getElementById('message').innerHTML = "You have wagered the maximum";
 		bet = totalPot;
 	}
 	
@@ -115,6 +117,11 @@ function deal(){
 	reset();
 	var currPot = totalPot-bet;
 	document.getElementById('win-count').innerHTML = "$"+currPot;
+
+	if(bet == 0){
+		document.getElementById('message').innerHTML = "You must make a wager"
+		return false;
+	}
 
 	deck = shuffleDeck();
 	playerHand=[deck[0],deck[2]];

@@ -1,7 +1,7 @@
 #the-table{
 	background: green;
 	max-width: 600px;
-	height:500px;
+	height:470px;
 	border-radius: 10px;
 	margin: auto;
 	margin-top: 30px;
@@ -101,16 +101,16 @@
 	display:inline;
 	float:left;
 	color:white;
-	margin:20px;
+	margin: 10px 20px;
 	width:160px;
 	text-align: center;
 }
 .up-arrow:hover{
-	border-bottom: 20px solid #ccc;
+	border-bottom: 20px solid #999;
 	cursor: pointer;
 }
 .down-arrow:hover{
-	border-top: 20px solid #ccc;
+	border-top: 20px solid #999;
 	cursor: pointer;
 }
 .up-arrow{
@@ -118,17 +118,20 @@
 	border-left: 20px solid transparent;
 	border-right: 20px solid transparent;
 	border-bottom: 20px solid white;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
+	border-radius: 10px;
 }
 .down-arrow{
 	width:0px;
 	border-left: 20px solid transparent;
 	border-right: 20px solid transparent;
 	border-top: 20px solid white;
-	margin-top: 20px;
+	margin-top: 10px;
+	border-radius: 10px;
 }
+
 #wager{
 	text-align: center;
-	margin-top: 120px;
+	margin-top: 100px;
 	color:white;
 }
