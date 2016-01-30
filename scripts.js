@@ -106,12 +106,15 @@ function placeBet(amount){
 		alert("You don't have that much to wager");
 		bet = totalPot;
 	}
+	
 	document.getElementById('current-bet').innerHTML = "$"+ bet;
 }
 
 function deal(){
 // Shuffled deck from function shuffleDeck
 	reset();
+	var currPot = totalPot-bet;
+	document.getElementById('win-count').innerHTML = "$"+currPot;
 
 	deck = shuffleDeck();
 	playerHand=[deck[0],deck[2]];
