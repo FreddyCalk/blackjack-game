@@ -7,6 +7,7 @@ var dealerHand;
 var totalPot = 1000;
 var bet = 0;
 var busted = false;
+var inHand = false;
 
 setInterval(function(){
 	if((totalPot == 0)||(bet == 0)){
@@ -26,9 +27,11 @@ function bust(who){
 		totalPot-=bet;
 		bet = totalPot;
 		document.getElementById('current-bet').innerHTML = "$"+ bet;
+		inHand = false;
 	}else if(who === 'dealer'){
 		document.getElementById('message').innerHTML = "The dealer has busted, you win!";
 		totalPot+=bet;
+		inHand = false;
 	}
 	document.getElementById('win-count').innerHTML = "$"+totalPot;
 	busted = true;
@@ -77,15 +80,19 @@ function checkWin(){
 		
 		if((playerTotal===21)&&(dealerTotal!==21)){
 			winner='blackjack'
+			inHand = false;
 		}
 		else if(((playerTotal>dealerTotal)&&(playerTotal<=21))||((dealerTotal>21)&&(playerTotal<=21))){
 			// Player Wins!
 			winner = 'player';
+			inHand = false;
 		}else if(((playerTotal === dealerTotal)&&(playerTotal<=21))||((playerTotal>21)&&(dealerTotal>21))){
 			winner = 'tie';
+			inHand = false;
 			// Push
 		}else{
 			winner = 'dealer';
+			inHand = false;
 		}
 		if(winner=== 'blackjack'){
 			document.getElementById('message').innerHTML = "BlackJack!"
@@ -114,21 +121,24 @@ function checkWin(){
 }
 
 function placeBet(amount){
-	bet += amount;
-	if(bet<0){
-		document.getElementById('message').innerHTML = "You must wager a positive amount";
-		bet = 0;
-	}else if(bet> totalPot){
-		document.getElementById('message').innerHTML = "You have wagered the maximum";
-		bet = totalPot;
-	}
 	
-	document.getElementById('current-bet').innerHTML = "$"+ bet;
+	if((!inHand)&&(totalPot !== 0)){
+		bet += amount;
+		if(bet<0){
+			document.getElementById('message').innerHTML = "You must wager a positive amount";
+			bet = 0;
+		}else if(bet> totalPot){
+			document.getElementById('message').innerHTML = "You have wagered the maximum";
+			bet = totalPot;
+		}
+		document.getElementById('current-bet').innerHTML = "$"+ bet;
+	}
 }
 
 function deal(){
 // Shuffled deck from function shuffleDeck
 	reset();
+	inHand = true;
 	var currPot = totalPot-bet;
 	document.getElementById('win-count').innerHTML = "$"+currPot;
 
