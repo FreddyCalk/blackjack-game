@@ -24,6 +24,8 @@ function bust(who){
 		document.getElementById('dealer-card-one').className = 'card';
 		document.getElementById('dealer-card-one').innerHTML = deck[1];
 		totalPot-=bet;
+		bet = totalPot;
+		document.getElementById('current-bet').innerHTML = "$"+ bet;
 	}else if(who === 'dealer'){
 		document.getElementById('message').innerHTML = "The dealer has busted, you win!";
 		totalPot+=bet;
@@ -95,6 +97,8 @@ function checkWin(){
 		}else if(winner === 'dealer'){
 			document.getElementById('message').innerHTML = "You Lose!";
 			totalPot-=bet;
+			bet = totalPot;
+			document.getElementById('current-bet').innerHTML = "$"+ bet;
 		}else if(winner === 'tie'){
 			document.getElementById('message').innerHTML = "Push!";
 		}
