@@ -25,16 +25,24 @@ function bust(who){
 		document.getElementById('dealer-card-one').className = 'card';
 		document.getElementById('dealer-card-one').innerHTML = deck[1];
 		totalPot-=bet;
-		bet = totalPot;
-		document.getElementById('current-bet').innerHTML = "$"+ bet;
-		inHand = false;
+		if(bet>totalPot){
+			bet = totalPot;
+			document.getElementById('current-bet').innerHTML = "$"+ bet;
+		}
 	}else if(who === 'dealer'){
 		document.getElementById('message').innerHTML = "The dealer has busted, you win!";
+		busted = true;
+		var playerTotal = calculateTotal(playerHand,'player');
+		if(playerTotal == 21){
+			totalPot+=bet*1.5;
+			document.getElementById('message').innerHTML = "BlackJack!";
+		}else{
 		totalPot+=bet;
-		inHand = false;
+		}
 	}
 	document.getElementById('win-count').innerHTML = "$"+totalPot;
 	busted = true;
+	inHand = false;
 	if(totalPot <= 0){
 		alert("You're out of money!")
 		document.getElementById('draw-button').disabled = true;
@@ -104,8 +112,10 @@ function checkWin(){
 		}else if(winner === 'dealer'){
 			document.getElementById('message').innerHTML = "You Lose!";
 			totalPot-=bet;
-			bet = totalPot;
-			document.getElementById('current-bet').innerHTML = "$"+ bet;
+			if(bet>totalPot){
+				bet = totalPot;
+				document.getElementById('current-bet').innerHTML = "$"+ bet;
+			}
 		}else if(winner === 'tie'){
 			document.getElementById('message').innerHTML = "Push!";
 		}
@@ -192,8 +202,24 @@ function hit(){
 
 function placeCard(card,who,slot){
 	var currentId = who + '-card-' + slot;
+	// console.log(card.indexOf('<'));
+	var finalCard = card;
+	if(card.indexOf('<') == 2){
+		var array = card.split("<");
+		// console.log(array)
+		if(array[0] == "11"){
+			array[0] = "J";
+		}else if(array[0] == "12"){
+			array[0] = "Q";
+		}else if(array[0] == "13"){
+			array[0] = "K";
+		}
+
+		finalCard = array[0] + "<" + array[1];
+
+	};
 	document.getElementById(currentId).className = "card";
-	document.getElementById(currentId).innerHTML = card;
+	document.getElementById(currentId).innerHTML = finalCard;
 	
 }
 
