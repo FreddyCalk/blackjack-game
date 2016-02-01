@@ -14,7 +14,7 @@ setInterval(function(){
 		document.getElementById('draw-button').disabled = true;
 		document.getElementById('hit-button').disabled = true;
 		document.getElementById('stand-button').disabled = true;
-	}else{
+	}else if(!inHand){
 		document.getElementById('draw-button').disabled = false;
 	}
 },100)
@@ -202,22 +202,19 @@ function hit(){
 
 function placeCard(card,who,slot){
 	var currentId = who + '-card-' + slot;
-	// console.log(card.indexOf('<'));
 	var finalCard = card;
-	if(card.indexOf('<') == 2){
-		var array = card.split("<");
-		// console.log(array)
-		if(array[0] == "11"){
-			array[0] = "J";
-		}else if(array[0] == "12"){
-			array[0] = "Q";
-		}else if(array[0] == "13"){
-			array[0] = "K";
-		}
-
-		finalCard = array[0] + "<" + array[1];
-
-	};
+	var array = card.split("<");
+	if(array[0] == "11"){
+		array[0] = "J";
+	}else if(array[0] == "12"){
+		array[0] = "Q";
+	}else if(array[0] == "13"){
+		array[0] = "K";
+	}else if(array[0] == "1"){
+		array[0] = "A";
+	}
+	console.log(array)
+	finalCard = array[0] + "<" + array[1];
 	document.getElementById(currentId).className = "card";
 	document.getElementById(currentId).innerHTML = finalCard;
 	
