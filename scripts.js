@@ -163,7 +163,7 @@ function deal(){
 	placeInDeck = 4;
 
 	placeCard(playerHand[0],'player','one');
-	placeCard(dealerHand[0],'dealer','one');
+	// placeCard(dealerHand[0],'dealer','one');
 	placeCard(playerHand[1],'player','two');
 	placeCard(dealerHand[1],'dealer','two');
 
@@ -293,7 +293,7 @@ function stand(){
 	}
 	document.getElementById('dealer-total').innerHTML = dealerHas;
 	document.getElementById('dealer-card-one').className = 'card';
-	document.getElementById('dealer-card-one').innerHTML = deck[1];
+	placeCard(dealerHand[0],'dealer','one');
 	document.getElementById('stand-button').disabled = true;
 	document.getElementById('draw-button').disabled = false;
 	checkWin();
